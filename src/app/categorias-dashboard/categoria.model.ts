@@ -1,5 +1,7 @@
-export interface Categoria {
-  id: number;
-  name: string;
-  description: string;
+export class Categoria {
+  constructor(
+    public id: number | null,
+    public name: string,
+    public description: string
+  ) {}
 }

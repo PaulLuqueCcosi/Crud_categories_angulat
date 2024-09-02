@@ -58,11 +58,22 @@ export class CategoriasDashboardComponent implements OnInit {
   onSubmit(): void {
     if (this.categoriaForm.valid) {
       this.categoriasService
-        .addCategoria(this.categoriaForm.value)
+        .addCategoria(
+          new Categoria(
+            null,
+            this.categoriaForm.value.nombre,
+            this.categoriaForm.value.descripcion
+          )
+          // this.categoriaForm.value
+        )
         .subscribe((response) => {
           console.log('Categoría añadida:', response);
           // ctualizar la lista de categorías o mostrar un mensaje de éxito.
         });
+
+      this.categoriasService.getCategorias().subscribe((data) => {
+        this.categorias = data;
+      });
     }
   }
   deleteCategoria(id: number): void {
