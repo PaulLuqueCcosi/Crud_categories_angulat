@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
-import {MatFormFieldModule} from '@angular/material/form-field'
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,6 +13,7 @@ import { CategoriasService } from '../categorias.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { Categoria } from './categoria.model';
 @Component({
   selector: 'app-categorias-dashboard',
   templateUrl: './categorias-dashboard.component.html',
@@ -24,39 +25,44 @@ import { RouterModule } from '@angular/router';
     MatMenuModule,
     MatIconModule,
     MatButtonModule,
-    MatCardModule,MatFormFieldModule, MatInputModule,
-    ReactiveFormsModule,CommonModule,RouterModule
-  ]
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    CommonModule,
+    RouterModule,
+  ],
 })
-
 export class CategoriasDashboardComponent implements OnInit {
   categoriaForm: FormGroup;
-    // Declaración de la propiedad
-    categorias: any[] = [];
-   
-  constructor(private fb: FormBuilder, private categoriasService: CategoriasService) {
+  // Declaración de la propiedad
+  categorias: Categoria[] = [];
+
+  constructor(
+    private fb: FormBuilder,
+    private categoriasService: CategoriasService
+  ) {
     this.categoriaForm = this.fb.group({
       nombre: [''],
-      descripcion: ['']
+      descripcion: [''],
     });
   }
 
   ngOnInit(): void {
+    console.log('CategoriasDashboardComponent ha sido inicializado');
 
-      console.log('CategoriasDashboardComponent ha sido inicializado');
-    
-    
-  this.categorias = [
-    { nombre: 'Categoría 1' },
-    { nombre: 'Categoría 2' },
-    { nombre: 'Categoría 3' }
-  ];}
+    this.categoriasService.getCategorias().subscribe((data) => {
+      this.categorias = data;
+    });
+  }
   onSubmit(): void {
     if (this.categoriaForm.valid) {
-      this.categoriasService.addCategoria(this.categoriaForm.value).subscribe(response => {
-        console.log('Categoría añadida:', response);
-        // ctualizar la lista de categorías o mostrar un mensaje de éxito.
-      });
+      this.categoriasService
+        .addCategoria(this.categoriaForm.value)
+        .subscribe((response) => {
+          console.log('Categoría añadida:', response);
+          // ctualizar la lista de categorías o mostrar un mensaje de éxito.
+        });
     }
   }
   deleteCategoria(id: number): void {
