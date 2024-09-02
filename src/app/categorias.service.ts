@@ -6,6 +6,7 @@ import { Categoria } from './categorias-dashboard/categoria.model'; // Asegúrat
   providedIn: 'root',
 })
 export class CategoriasService {
+  // TODO: aqui se debe de hacer las llamadas al back pero como no tenemos, esta implemenatdo en memoria
   private categorias: Categoria[] = [
     { id: 1, name: 'Electronics', description: 'Example description' },
     { id: 2, name: 'Books', description: 'Example description' },
