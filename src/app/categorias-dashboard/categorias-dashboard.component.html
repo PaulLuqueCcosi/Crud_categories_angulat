@@ -13,12 +13,9 @@
 
     <button mat-raised-button color="primary" type="submit">Agregar Categoría</button>
 
-    <mat-card *ngFor="let categoria of categorias">
-      <mat-card-title>{{ categoria.name }}</mat-card-title>
-      <mat-card-content>{{ categoria.description }}</mat-card-content>
-      <button mat-button color="warn" (click)="deleteCategoria(categoria.id!)">Eliminar</button>
-    </mat-card>
-
   </form>
-
-
+  <mat-card *ngFor="let categoria of categorias">
+    <mat-card-title>{{ categoria.name }}</mat-card-title>
+    <mat-card-content>{{ categoria.description }}</mat-card-content>
+    <button mat-button color="warn" (click)="deleteCategoria(categoria)">Eliminar</button>
+  </mat-card>

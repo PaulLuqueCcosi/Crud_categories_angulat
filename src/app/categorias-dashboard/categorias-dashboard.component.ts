@@ -51,9 +51,7 @@ export class CategoriasDashboardComponent implements OnInit {
   ngOnInit(): void {
     console.log('CategoriasDashboardComponent ha sido inicializado');
 
-    this.categoriasService.getCategorias().subscribe((data) => {
-      this.categorias = data;
-    });
+    this.loadCategorias();
   }
   onSubmit(): void {
     if (this.categoriaForm.valid) {
@@ -76,10 +74,19 @@ export class CategoriasDashboardComponent implements OnInit {
       });
     }
   }
-  deleteCategoria(id: number): void {
-    this.categoriasService.deleteCategoria(id).subscribe(() => {
-      console.log('Categoría eliminada');
-      // actualizar la lista de categorías después de la eliminación.
+  // Método para cargar las categorías
+  loadCategorias(): void {
+    console.log('Categories: ', this.categorias);
+    this.categoriasService.getCategorias().subscribe((data) => {
+      this.categorias = data;
     });
+    console.log('Categories then: ', this.categorias);
+  }
+
+  // Método para eliminar una categoría
+  deleteCategoria(category: Categoria): void {
+    console.log('Categoría eliminada', category);
+    this.categoriasService.deleteCategoria(category.id!).subscribe(() => {});
+    this.loadCategorias(); // Actualizar la lista después de eliminar
   }
 }
